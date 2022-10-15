@@ -12,26 +12,30 @@ const { NotImplementedError } = require("../extensions/index.js");
  *
  */
 function getSeason(a) {
-  throw new NotImplementedError("Not implemented");
-  /*
-  if (Object.prototype.toString.call(a) === "[object Date]") {
-    if (!isNaN(a.getTime())) {
-      const seasonNum = a.getMonth();
-      if (seasonNum < 2 || seasonNum == 11) {
-        return "winter";
-      } else if (seasonNum < 5) {
-        return "spring";
-      } else if (seasonNum < 8) {
-        return "summer";
-      } else {
-        return "autumn";
-      }
-    } else {
-      return "Invalid date!";
+  if (a !== undefined) {
+    if (Object.prototype.toString.call(a) !== "[object Date]") {
+      throw new Error("Invalid date!");
     }
-  } else return "Unable to determine the time of year!";
-  */
+    if (Object.getOwnPropertyNames(a).length) {
+      throw new Error("Invalid date!");
+    }
+   
+
+    const seasonNum = a.getMonth();
+    if (seasonNum < 2 || seasonNum == 11) {
+      return "winter";
+    } else if (seasonNum < 5) {
+      return "spring";
+    } else if (seasonNum < 8) {
+      return "summer";
+    } else {
+      return "autumn";
+    }
+  } else {
+    return "Unable to determine the time of year!";
+  }
 }
+console.log(getSeason(new Date(2205, 6, 11, 4, 40, 45, 325)));
 
 module.exports = {
   getSeason,
